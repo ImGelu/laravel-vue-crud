@@ -12,7 +12,7 @@
     <!-- Scripts -->
     @vite('resources/js/app.js')
 </head>
-<body class="font-sans antialiased">
+<body class="w-full bg-slate-200">
     <div id="app"></div>
 </body>
 </html>
