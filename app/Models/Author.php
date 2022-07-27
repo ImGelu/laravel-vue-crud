@@ -10,6 +10,11 @@ class Author extends Model
     use HasFactory;
 
     protected $hidden = ['pivot'];
+    protected $appends = ['full_name'];
+
+    public function getFullNameAttribute(){
+        return $this->attributes['first_name'] . " " . $this->attributes['last_name'];
+    }
 
     public function books()
     {

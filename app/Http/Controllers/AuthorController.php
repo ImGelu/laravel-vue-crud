@@ -8,26 +8,6 @@ use Illuminate\Http\Request;
 class AuthorController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -39,14 +19,18 @@ class AuthorController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Returns a Book specified by its ID, or all Books if no ID is provided.
      *
-     * @param  \App\Models\Author  $author
-     * @return \Illuminate\Http\Response
+     * @param int|null $id
+     * @return Author|Author[]
      */
-    public function show(Author $author)
+    public function show(int $id = null)
     {
-        //
+        if ($id === null) {
+            return Author::all();
+        } else {
+            return Author::findOrFail($id);
+        }
     }
 
     /**

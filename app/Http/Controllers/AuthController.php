@@ -32,8 +32,6 @@ class AuthController extends Controller
     public function logout(){
         Session::flush();
 
-        Auth::logout();
-
-        return "da";
+        auth()->guard('web')->logout();
     }
 }
