@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +12,13 @@ use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
-    public function register(Request $request){
+    /**
+     * Registers a new account.
+     *
+     * @param RegisterRequest $request
+     * @return User
+     */
+    public function register(RegisterRequest $request){
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -21,6 +28,12 @@ class AuthController extends Controller
         return $user;
     }
 
+    /**
+     * Validates the credentials and authenticates the user.
+     *
+     * @param LoginRequest $request
+     * @return User
+     */
     public function login(LoginRequest $request){
         $request->authenticate();
 
@@ -29,6 +42,11 @@ class AuthController extends Controller
         return auth()->user();
     }
 
+    /**
+     * Clears the user session and logouts the user.
+     *
+     * @return void
+     */
     public function logout(){
         Session::flush();
 

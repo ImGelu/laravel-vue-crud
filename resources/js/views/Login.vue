@@ -13,12 +13,8 @@ const form = reactive({
 
 const user = useAuthStore();
 
-const error = reactive({
-    value: {
-        message: "",
-        errors: []
-    },
-    message: '',
+const data = reactive({
+    errors: []
 });
 
 const login = (e) => {
@@ -28,7 +24,7 @@ const login = (e) => {
         user.set(res.data);
         router.push("/dashboard");
     }).catch((err) => {
-        error.value = err.response.data;
+        data.errors = [].concat.apply([], Object.values(err.response.data.errors))
     })
 }
 </script>
@@ -36,7 +32,11 @@ const login = (e) => {
   <div class="bg-white rounded-lg shadow-sm p-8">
       <h1 class="text-xl text-gray-700 uppercase font-bold text-center">Login</h1>
 
-      <div class="bg-red-200 rounded-lg p-5 my-4" v-if="error.value.message.length !== 0">{{error.value.message}}</div>
+      <div class="bg-red-200 rounded-lg p-5 my-4" v-if="data.errors.length > 0">
+          <ul v-for="error in data.errors">
+              <li>{{ error }}</li>
+          </ul>
+      </div>
       <form>
           <div class="mb-6">
               <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your email</label>
