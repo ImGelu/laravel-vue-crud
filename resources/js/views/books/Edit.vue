@@ -20,7 +20,8 @@ const data = reactive({
         price: 0,
         authors: []
     },
-    authors: []
+    authors: [],
+    errors: []
 });
 
 onMounted(() => {
