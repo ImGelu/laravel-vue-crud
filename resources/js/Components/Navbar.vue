@@ -5,8 +5,9 @@ import {useAuthStore} from "@/stores/auth";
 const user = useAuthStore();
 const router = useRouter();
 
-const click = () => {
+const logout = () => {
     axios.get("logout").then(() => {
+        user.set(null);
         router.push("/login");
     })
 }

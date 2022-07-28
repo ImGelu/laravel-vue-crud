@@ -2,25 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BookRequest;
 use App\Models\Book;
-use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
 
     /**
-     * Store a newly created resource in storage.
+     * Save to database a newly created Book.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param BookRequest $request
+     * @return Book
      */
-    public function store(Request $request)
+    public function store(BookRequest $request)
     {
-        //
+        $book = Book::create([
+            'name' => $request->name,
+            'pages' => $request->pages,
+            'language' => $request->language,
+            'price' => $request->price
+        ]);
+
+        $book->authors()->attach($request->authors);
+
+        return $book;
     }
 
     /**
-     * Returns a Book specified by its ID, or all Books if no ID is provided.
+     * Returns a Book based on its ID, or all Books if no ID is provided.
      *
      * @param int|null $id
      * @return Book|Book[]
@@ -35,25 +44,40 @@ class BookController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified Book in database.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Book $book
-     * @return \Illuminate\Http\Response
+     * @param BookRequest $request
+     * @param int $id
+     * @return Book
      */
-    public function update(Request $request, Book $book)
+    public function update(BookRequest $request, int $id)
     {
-        //
+        $book = Book::findOrFail($id);
+
+        $book->name = $request->name;
+        $book->pages = $request->pages;
+        $book->language = $request->language;
+        $book->price = $request->price;
+
+        $book->authors()->sync($request->authors);
+
+        $book->save();
+
+        return $book;
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified Book from database.
      *
-     * @param \App\Models\Book $book
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Book
      */
-    public function destroy(Book $book)
+    public function destroy(int $id)
     {
-        //
+        $book = Book::findOrFail($id);
+        $book->authors()->sync([]);
+        $book->delete();
+
+        return $book;
     }
 }

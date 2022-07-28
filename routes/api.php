@@ -25,7 +25,12 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/v1/logout', [AuthController::class, 'logout']);
 
+    Route::post('/v1/books', [BookController::class, 'store']);
     Route::get('/v1/books/{id?}', [BookController::class, 'show']);
+    Route::put('/v1/books/{id}', [BookController::class, 'update']);
+    Route::delete('/v1/books/{id}', [BookController::class, 'destroy']);
+
+
     Route::get('/v1/authors/{id?}', [AuthorController::class, 'show']);
 
 });
