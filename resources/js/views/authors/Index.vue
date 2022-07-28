@@ -20,11 +20,11 @@ onMounted(() => {
 })
 
 const deleteAuthor = (id) => {
-    let canDelete = confirm("Are you sure you want to delete this Author?\n\nThe Books belonging to this author will be also deleted permanently.");
+    let canDelete = confirm("Are you sure you want to delete this Author?");
 
     if (canDelete === true) {
         authorStore.deleteAuthor(id).then(() => {
-            data.list = authorStore.getAuthor
+            data.list = authorStore.getAuthors
             alert("The Author has been successfully deleted!");
         })
     }

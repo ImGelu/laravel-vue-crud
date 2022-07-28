@@ -66,9 +66,8 @@ class AuthorController extends Controller
     {
         $author = Author::findOrFail($id);
 
-        $author->books()->each(function($book){
-           $book->delete();
-        });
+        $author->books()->sync([]);
+
         $author->delete();
 
         return $author;
