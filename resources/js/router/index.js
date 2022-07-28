@@ -48,7 +48,22 @@ const router = createRouter({
             path: '/authors',
             name: 'authors',
             component: () => import('../views/authors/Index.vue')
-        }
+        },
+        {
+            path: '/authors/:id',
+            name: 'authors-view',
+            component: () => import('../views/authors/View.vue')
+        },
+        {
+            path: '/authors/:id/edit',
+            name: 'authors-edit',
+            component: () => import('../views/authors/Edit.vue')
+        },
+        {
+            path: '/authors/create',
+            name: 'authors-create',
+            component: () => import('../views/authors/Create.vue')
+        },
     ]
 })
 

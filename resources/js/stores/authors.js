@@ -16,9 +16,30 @@ export const useAuthorStore = defineStore('authors', {
             const response = await axios.get("authors")
             this.authors = response.data;
         },
-        async fetchBook(id) {
+
+        async fetchAuthor(id) {
             const response = await axios.get(`authors/${id}`)
             this.author = response.data;
+        },
+
+        async updateAuthor(id, data) {
+            const response = await axios.put(`authors/${id}`, data)
+            const returnedAuthor = response.data;
+
+            const foundIndex = this.authors.findIndex((author) => author.id === returnedAuthor.id);
+            this.authors[foundIndex] = returnedAuthor;
+
+            this.author = returnedAuthor;
+        },
+
+        async createAuthor(data) {
+            const response = await axios.post(`authors`, data)
+            this.authors.push(response.data);
+        },
+
+        async deleteAuthor(id) {
+            const response = await axios.delete(`authors/${id}`)
+            this.authors = this.authors.filter((author) => author.id !== response.data.id);
         }
     }
 })

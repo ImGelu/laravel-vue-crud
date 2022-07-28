@@ -37,15 +37,18 @@ onMounted(() => {
 
     authorStore.fetchAuthors().then(() => {
         data.authors = authorStore.getAuthors
-    })
+    });
 })
 
 const edit = (e) => {
     e.preventDefault();
 
     bookStore.updateBook(route.params.id, data.book).then(() => {
-        alert("Updated Successfully!");
-    })
+        alert("Book Updated Successfully!");
+        router.push("/books");
+    }).catch((err) => {
+        data.errors = [].concat.apply([], Object.values(err.response.data.errors))
+    });
 }
 
 </script>
@@ -54,6 +57,11 @@ const edit = (e) => {
     <div class="bg-white rounded-lg shadow-sm p-8 relative">
         <LoadingOverlay v-if="loading"/>
         <h1 class="font-bold text-2xl mb-4">Edit Book #{{ data.book.id }}</h1>
+        <div class="bg-red-200 rounded-lg p-5 my-4" v-if="data.errors.length > 0">
+            <ul v-for="error in data.errors">
+                <li>{{ error }}</li>
+            </ul>
+        </div>
 
         <form>
             <div class="mb-6">

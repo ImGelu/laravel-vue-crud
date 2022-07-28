@@ -11,6 +11,7 @@ class Author extends Model
 
     protected $hidden = ['pivot'];
     protected $appends = ['full_name'];
+    protected $fillable = ['first_name', 'last_name'];
 
     public function getFullNameAttribute(){
         return $this->attributes['first_name'] . " " . $this->attributes['last_name'];
